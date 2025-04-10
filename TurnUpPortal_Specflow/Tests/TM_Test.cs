@@ -10,6 +10,7 @@ using TurnUpPortal_Specflow.Utilities;
 
 namespace TurnUpPortal_Specflow.Tests
 {
+    [Parallelizable]
     [TestFixture]
     public class TM_Test : CommonDriver
     {
@@ -35,7 +36,7 @@ namespace TurnUpPortal_Specflow.Tests
 
         //Tests
 
-        [Test]
+        [Test, Order (1) , Description ("Checks if user can create a new Time & Material Record") ]
 
         public void CreateTimeRecord()
         {
@@ -44,7 +45,7 @@ namespace TurnUpPortal_Specflow.Tests
 
         }
 
-        [Test]
+        [Test , Order (2), Description ("Checks if user can update existing Time & Material Records") ]
 
         public void EditRecord()
         {
@@ -54,7 +55,7 @@ namespace TurnUpPortal_Specflow.Tests
 
         }
 
-        [Test]
+        [Test, Order (3) , Description("Checks is user can delete existing record") ]
 
         public void DeleteRecord()
         {

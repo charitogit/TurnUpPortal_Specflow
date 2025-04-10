@@ -162,9 +162,11 @@ namespace TurnUpPortal_Specflow.Pages
         {
             //DELETE A RECORD
 
+            Wait.WaitToBeVisible(driver, "XPath", "//*[@id=\"tmsGrid\"]/div[4]/a[4]/span", 30); 
+
             try
             {
-
+                Thread.Sleep(5000);
                 //Click on last record button
                 Wait.WaitToBeClickable(driver, "XPath", "//*[@id=\"tmsGrid\"]/div[4]/a[4]/span", 30); ////*[@id="tmsGrid"]/div[4]/a[4]/span
                 IWebElement lastRecordButton = driver.FindElement(By.XPath("//*[@id=\"tmsGrid\"]/div[4]/a[4]/span"));
@@ -180,13 +182,13 @@ namespace TurnUpPortal_Specflow.Pages
 
             }
 
-            //Validate first if record to be deleted is existing 
-            //Wait.WaitToBeVisible(driver, "XPath", "//*[@id=\"tmsGrid\"]/div[3]/table/tbody/tr[last()]/td[1]", 30); ////*[@id="tmsGrid"]/div[3]/table/tbody/tr[6]/td[1]
+           // Validate first if record to be deleted is existing
+            Wait.WaitToBeVisible(driver, "XPath", "//*[@id=\"tmsGrid\"]/div[3]/table/tbody/tr[last()]/td[1]", 30); ////*[@id="tmsGrid"]/div[3]/table/tbody/tr[6]/td[1]
+
+            Thread.Sleep(5000);
 
             try
-            {
-
-                Thread.Sleep(5000);
+            { 
                 IWebElement recordToDelete = driver.FindElement(By.XPath("//*[@id=\"tmsGrid\"]/div[3]/table/tbody/tr[last()]/td[1]"));
 
 

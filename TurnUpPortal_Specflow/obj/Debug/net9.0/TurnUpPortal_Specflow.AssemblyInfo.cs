@@ -14,7 +14,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("TurnUpPortal_Specflow")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+683e2d13416fff66a03735d90d0aa5422bacbb9f")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+b6ad91efd2e52ec6ddaee8bbe3f8ff01a864513d")]
 [assembly: System.Reflection.AssemblyProductAttribute("TurnUpPortal_Specflow")]
 [assembly: System.Reflection.AssemblyTitleAttribute("TurnUpPortal_Specflow")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]
