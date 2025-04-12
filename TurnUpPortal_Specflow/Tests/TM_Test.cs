@@ -41,7 +41,7 @@ namespace TurnUpPortal_Specflow.Tests
         public void CreateTimeRecord()
         {
             TM_Page tmPageObj = new TM_Page();
-            tmPageObj.CreateTimeRecord(driver);
+            tmPageObj.CreateTimeRecord(driver,"");
 
         }
 
@@ -50,7 +50,7 @@ namespace TurnUpPortal_Specflow.Tests
         public void EditRecord()
         {
             TM_Page tmPageObj = new TM_Page();
-            tmPageObj.EditRecord(driver);
+            tmPageObj.EditRecord(driver,"","");
 
 
         }

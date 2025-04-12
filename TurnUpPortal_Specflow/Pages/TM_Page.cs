@@ -12,7 +12,7 @@ namespace TurnUpPortal_Specflow.Pages
     public class TM_Page
     {
 
-       public void CreateTimeRecord(IWebDriver driver)
+       public void CreateTimeRecord(IWebDriver driver,string enteredCode)
         {
             //Create New Record
             IWebElement createButton = driver.FindElement(By.XPath("//*[@id=\"container\"]/p/a"));
@@ -29,7 +29,7 @@ namespace TurnUpPortal_Specflow.Pages
             //Enter Code
             IWebElement code = driver.FindElement(By.Id("Code"));
             code.Click();
-            code.SendKeys("MARCH2025");
+            code.SendKeys(enteredCode);
 
             //Enter Descritpion
             IWebElement descriptionText = driver.FindElement(By.Id("Description"));
@@ -63,17 +63,24 @@ namespace TurnUpPortal_Specflow.Pages
                 Assert.Fail("last record button not located");
 
             }
+         
+
+        }
+
+        public string GetNewCode(IWebDriver driver)
+        {
+
             //Check last record of the data table
 
             Wait.WaitToBeVisible(driver, "XPath", "//*[@id=\"tmsGrid\"]/div[3]/table/tbody/tr[last()]/td[1]", 30);
             IWebElement lastRecord = driver.FindElement(By.XPath("//*[@id=\"tmsGrid\"]/div[3]/table/tbody/tr[last()]/td[1]"));
             Thread.Sleep(5000);
-            Assert.That(lastRecord.Text, Is.EqualTo("MARCH2025"), "Test Failed: New Record is not created successfully.");
-
+   
+            return lastRecord.Text; 
 
         }
 
-        public void EditRecord(IWebDriver driver)
+        public void EditRecord(IWebDriver driver, string editCode, string editDescription)
         {
             //EDIT A RECORD
             //Click on last record button
@@ -105,13 +112,13 @@ namespace TurnUpPortal_Specflow.Pages
             IWebElement codeText = driver.FindElement(By.Id("Code"));
             codeText.Click();
             codeText.Clear();
-            codeText.SendKeys("APRIL2025");
+            codeText.SendKeys(editCode);
 
             //Enter Description
             IWebElement descriptionText = driver.FindElement(By.Id("Description"));
             descriptionText.Click();
             descriptionText.Clear();
-            descriptionText.SendKeys("APRIL2025");
+            descriptionText.SendKeys(editDescription);
 
             //Enter Price
             IWebElement priceTag = driver.FindElement(By.XPath("//*[@id=\"TimeMaterialEditForm\"]/div/div[4]/div/span[1]/span/input[1]"));
@@ -129,9 +136,11 @@ namespace TurnUpPortal_Specflow.Pages
             IWebElement saveButton = driver.FindElement(By.Id("SaveButton"));
             saveButton.Click();
 
+
+            //Check if record is updated successfully
             try
             {
-                //Check if record is updated successfully
+              
                 Wait.WaitToBeClickable(driver, "XPath", "//*[@id=\"tmsGrid\"]/div[4]/a[4]/span", 10);
                 IWebElement lastRecordButtonAfterSave = driver.FindElement(By.XPath("//*[@id=\"tmsGrid\"]/div[4]/a[4]/span"));
                 lastRecordButtonAfterSave.Click();
@@ -145,16 +154,25 @@ namespace TurnUpPortal_Specflow.Pages
             }
 
             Thread.Sleep(5000);
+          
+
+        }
+
+        public string GetEditedCode(IWebDriver driver)
+        {
+
             Wait.WaitToBeVisible(driver, "XPath", "//*[@id=\"tmsGrid\"]/div[3]/table/tbody/tr[last()]/td[1]", 30);
             IWebElement lastCodeRecord = driver.FindElement(By.XPath("//*[@id=\"tmsGrid\"]/div[3]/table/tbody/tr[last()]/td[1]"));
+            return lastCodeRecord.Text; 
+        }
 
+        public string GetEditedDescription(IWebDriver driver)
+        {
+ 
             Wait.WaitToBeVisible(driver, "XPath", "//*[@id=\"tmsGrid\"]/div[3]/table/tbody/tr[last()]/td[3]", 30);
             IWebElement lastDescription = driver.FindElement(By.XPath("//*[@id=\"tmsGrid\"]/div[3]/table/tbody/tr[last()]/td[3]"));
 
-
-            Assert.That(lastCodeRecord.Text == "APRIL2025", "Code failed to edit.");
-            Assert.That(lastDescription.Text == "APRIL2025", "Description failed to edit");
-
+            return lastDescription.Text;
         }
 
         public void DeleteRecord(IWebDriver driver)

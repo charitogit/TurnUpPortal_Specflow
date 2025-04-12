@@ -19,4 +19,9 @@
     <PackageReference Include="Selenium.WebDriver.ChromeDriver" Version="135.0.7049.4200" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="StepDefinition\" />
+    <Folder Include="Specflow\" />
+  </ItemGroup>
+
 </Project>
