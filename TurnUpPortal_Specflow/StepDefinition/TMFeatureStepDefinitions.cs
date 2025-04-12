@@ -5,7 +5,7 @@ using Reqnroll;
 using TurnUpPortal_Specflow.Pages;
 using TurnUpPortal_Specflow.Utilities;
 
-namespace TurnUpPortal_Specflow
+namespace TurnUpPortal_Specflow.StepDefinition
 {
     [Binding]
     public class TMFeatureStepDefinitions : CommonDriver
