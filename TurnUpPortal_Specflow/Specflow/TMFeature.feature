@@ -12,6 +12,7 @@ Scenario: create time record with valid data
 	Then time & material records should be saved successfully 
 
 Scenario Outline: update time & material record with valid data
+
 	Given I logged on to TurnUp successfully
 	When I navigate to Time & Material tab
 	When I edit the '<Code>' and '<Description>' of existing record
@@ -23,5 +24,15 @@ Scenario Outline: update time & material record with valid data
 	| May2025    | Description2|
 	| Jun2025    | Description3|
 
+
+Scenario Outline: delete a time & material record
+Given I logged on to TurnUp successfully
+When I navigate to Time & Material tab
+When  I delete the '<Code>' and '<Description>' record  
+Then '<Code>' and '<Description>' should be deleted from the list
+
+Examples: 
+| Code    | Description  |
+| Jun2025 | Description3 |
 
 

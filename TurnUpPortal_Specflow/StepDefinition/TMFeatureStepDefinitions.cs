@@ -1,9 +1,4 @@
-using System;
-using NUnit.Framework;
-using OpenQA.Selenium.Chrome;
-using Reqnroll;
-using TurnUpPortal_Specflow.Pages;
-using TurnUpPortal_Specflow.Utilities;
+
 
 namespace TurnUpPortal_Specflow.StepDefinition
 {
@@ -13,15 +8,14 @@ namespace TurnUpPortal_Specflow.StepDefinition
         [Given("I logged on to TurnUp successfully")]
         public void GivenILoggedOnToTurnUpSuccessfully()
         {
-            driver = new ChromeDriver();
+
             driver.Manage().Window.Maximize();
             driver.Navigate().GoToUrl("http://horse.industryconnect.io/Account/Login?ReturnUrl=%2f");
-
+ 
             //Login Steps
             LogIn_Page loginPageObj = new LogIn_Page();
             loginPageObj.LogInSteps(driver);
-
-          
+            
         }
 
         [When("I navigate to Time & Material tab")]
@@ -38,8 +32,6 @@ namespace TurnUpPortal_Specflow.StepDefinition
             TM_Page tmPageObj = new TM_Page();
             tmPageObj.CreateTimeRecord(driver,"MARCH2025");
         }
-
-
 
         [Then("time & material records should be saved successfully")]
         public void ThenTimeMaterialRecordsShouldBeSavedSuccessfully()
@@ -65,6 +57,7 @@ namespace TurnUpPortal_Specflow.StepDefinition
         {
             //Assert if time & record updated successfully here 
             TM_Page tmPageObj = new TM_Page();
+            
             string editedCode = tmPageObj.GetEditedCode(driver);
             string editedDescription=tmPageObj.GetEditedDescription(driver);
 
@@ -72,6 +65,37 @@ namespace TurnUpPortal_Specflow.StepDefinition
             Assert.That(p1 == editedDescription, "Description failed to edit");
 
         }
+
+     
+
+        [When("I delete the {string} and {string} record")]
+        public void WhenIDeleteTheAndRecord(string code, string description)
+        {
+            //Call delete method from TM Page
+            TM_Page tmPageObj = new TM_Page();
+            tmPageObj.DeleteRecord(driver, code, description);
+        }
+
+        [Then("{string} and {string} should be deleted from the list")]
+        public void ThenAndShouldBeDeletedFromTheList(string code, string description)
+        {
+            //Assert here if deletion is successful 
+            TM_Page tmPageObj = new TM_Page();
+            string lastRowCode = tmPageObj.GetCodeFromLastRow(driver);
+
+
+            if (code != lastRowCode)
+            {
+                Assert.Pass("Record deleted successfully.");
+            }
+            else
+            {
+                Assert.Fail("Failed to delete record.");
+            }
+        }
+
+
+
 
     }
 }
