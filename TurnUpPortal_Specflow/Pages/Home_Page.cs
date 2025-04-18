@@ -1,9 +1,4 @@
-﻿using OpenQA.Selenium;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿
 
 namespace TurnUpPortal_Specflow.Pages
 {
@@ -11,7 +6,10 @@ namespace TurnUpPortal_Specflow.Pages
     {
         public void GoToTMPage (IWebDriver driver)
         {
+
+
             // Navigate to Time & Material Tab
+            Wait.WaitToBeVisible(driver, "XPath", "/html/body/div[3]/div/div/ul/li[5]/a", 10);
             IWebElement administrationButton = driver.FindElement(By.XPath("/html/body/div[3]/div/div/ul/li[5]/a"));
             administrationButton.Click();
 

@@ -1,12 +1,4 @@
-﻿using NUnit.Framework;
-using OpenQA.Selenium.Chrome;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using TurnUpPortal_Specflow.Pages;
-using TurnUpPortal_Specflow.Utilities;
+﻿
 
 namespace TurnUpPortal_Specflow.Tests
 {
@@ -60,7 +52,7 @@ namespace TurnUpPortal_Specflow.Tests
         public void DeleteRecord()
         {
             TM_Page tmPageObj = new TM_Page();
-            tmPageObj.DeleteRecord(driver);
+            tmPageObj.DeleteRecord(driver,"","");
 
         }
 

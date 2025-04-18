@@ -1,12 +1,4 @@
-﻿using NUnit.Framework;
-using OpenQA.Selenium;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using TurnUpPortal_Specflow.Utilities;
-
+﻿
 namespace TurnUpPortal_Specflow.Pages
 {
     public class TM_Page
@@ -17,12 +9,12 @@ namespace TurnUpPortal_Specflow.Pages
             //Create New Record
             IWebElement createButton = driver.FindElement(By.XPath("//*[@id=\"container\"]/p/a"));
             createButton.Click();
-            Wait.WaitToBeVisible(driver, "Xpath", "//*[@id=\"TimeMaterialEditForm\"]/div/div[1]/div/span[1]/span/span[1]", 5);
+            Wait.WaitToExist(driver, "Xpath", "//*[@id=\"TimeMaterialEditForm\"]/div/div[1]/div/span[1]/span/span[1]", 5);
 
             IWebElement typeCodeOption = driver.FindElement(By.XPath("//*[@id=\"TimeMaterialEditForm\"]/div/div[1]/div/span[1]/span/span[1]"));
             typeCodeOption.Click();
 
-            Wait.WaitToBeVisible(driver, "XPath", "//*[@id=\"TypeCode_listbox\"]/li[1]", 5);
+            Wait.WaitToBeClickable(driver, "XPath", "//*[@id=\"TypeCode_listbox\"]/li[1]", 5);
             IWebElement materialOption = driver.FindElement(By.XPath("//*[@id=\"TypeCode_listbox\"]/li[1]"));
             materialOption.Click();
 
@@ -47,7 +39,12 @@ namespace TurnUpPortal_Specflow.Pages
             //Click Save 
             IWebElement saveButton = driver.FindElement(By.Id("SaveButton"));
             saveButton.Click();
-            Thread.Sleep(5000);
+   
+
+        }
+
+        public string GetNewCode(IWebDriver driver)
+        {
 
             try
             {
@@ -63,35 +60,29 @@ namespace TurnUpPortal_Specflow.Pages
                 Assert.Fail("last record button not located");
 
             }
-         
-
-        }
-
-        public string GetNewCode(IWebDriver driver)
-        {
 
             //Check last record of the data table
 
             Wait.WaitToBeVisible(driver, "XPath", "//*[@id=\"tmsGrid\"]/div[3]/table/tbody/tr[last()]/td[1]", 30);
             IWebElement lastRecord = driver.FindElement(By.XPath("//*[@id=\"tmsGrid\"]/div[3]/table/tbody/tr[last()]/td[1]"));
-            Thread.Sleep(5000);
+           // Thread.Sleep(5000);
    
             return lastRecord.Text; 
 
         }
 
+      
+
         public void EditRecord(IWebDriver driver, string editCode, string editDescription)
         {
             //EDIT A RECORD
             //Click on last record button
-            Wait.WaitToBeClickable(driver, "XPath", "//*[@id=\"tmsGrid\"]/div[4]/a[4]/span", 30);
+            Wait.WaitToBeClickable(driver, "XPath", "//*[@id=\"tmsGrid\"]/div[4]/a[4]/span", 10);
             IWebElement lastRecordButton = driver.FindElement(By.XPath("//*[@id=\"tmsGrid\"]/div[4]/a[4]/span"));////*[@id="tmsGrid"]/div[4]/a[4]/span
             lastRecordButton.Click();
 
-            Wait.WaitToBeVisible(driver, "XPath", "//*[@id=\"tmsGrid\"]/div[3]/table/tbody/tr[last()]/td[1]", 30);
-
-
             //Click Edit in last record from the list
+            Wait.WaitToBeVisible(driver, "XPath", "//*[@id=\"tmsGrid\"]/div[3]/table/tbody/tr[last()]/td[1]", 10);
             IWebElement editButton = driver.FindElement(By.XPath("//*[@id=\"tmsGrid\"]/div[3]/table/tbody/tr[last()]/td[5]/a[1]"));
             editButton.Click();
 
@@ -109,38 +100,49 @@ namespace TurnUpPortal_Specflow.Pages
             timeOption.Click();
 
             //Enter Code
+            Wait.WaitToBeVisible(driver, "Id", "Code", 5);
             IWebElement codeText = driver.FindElement(By.Id("Code"));
             codeText.Click();
             codeText.Clear();
             codeText.SendKeys(editCode);
-
+           
             //Enter Description
+            Wait.WaitToBeVisible(driver, "Id", "Description", 5);
             IWebElement descriptionText = driver.FindElement(By.Id("Description"));
             descriptionText.Click();
             descriptionText.Clear();
             descriptionText.SendKeys(editDescription);
 
             //Enter Price
+            Wait.WaitToBeVisible(driver, "XPath", "//*[@id=\"TimeMaterialEditForm\"]/div/div[4]/div/span[1]/span/input[1]", 10);
             IWebElement priceTag = driver.FindElement(By.XPath("//*[@id=\"TimeMaterialEditForm\"]/div/div[4]/div/span[1]/span/input[1]"));
             priceTag.Click();
-            Wait.WaitToBeClickable(driver, "Id", "Price", 5);
-
+           
+            Wait.WaitToBeClickable(driver, "Id", "Price",5);
             IWebElement priceTextbox = driver.FindElement(By.Id("Price"));
             priceTextbox.Clear();
-
             priceTag.Click();
-            Thread.Sleep(1500);
+
+            //Thread.Sleep(1500);
             priceTextbox.SendKeys("$200.00");
+           
 
             //Click Save 
+            Wait.WaitToBeClickable(driver, "Id", "SaveButton", 5);
             IWebElement saveButton = driver.FindElement(By.Id("SaveButton"));
             saveButton.Click();
 
+    
+          
+        }
+
+        public string GetEditedCode(IWebDriver driver)
+        {
 
             //Check if record is updated successfully
             try
             {
-              
+
                 Wait.WaitToBeClickable(driver, "XPath", "//*[@id=\"tmsGrid\"]/div[4]/a[4]/span", 10);
                 IWebElement lastRecordButtonAfterSave = driver.FindElement(By.XPath("//*[@id=\"tmsGrid\"]/div[4]/a[4]/span"));
                 lastRecordButtonAfterSave.Click();
@@ -153,13 +155,6 @@ namespace TurnUpPortal_Specflow.Pages
 
             }
 
-            Thread.Sleep(5000);
-          
-
-        }
-
-        public string GetEditedCode(IWebDriver driver)
-        {
 
             Wait.WaitToBeVisible(driver, "XPath", "//*[@id=\"tmsGrid\"]/div[3]/table/tbody/tr[last()]/td[1]", 30);
             IWebElement lastCodeRecord = driver.FindElement(By.XPath("//*[@id=\"tmsGrid\"]/div[3]/table/tbody/tr[last()]/td[1]"));
@@ -175,18 +170,15 @@ namespace TurnUpPortal_Specflow.Pages
             return lastDescription.Text;
         }
 
-        public void DeleteRecord(IWebDriver driver)
+        public void DeleteRecord(IWebDriver driver, string codeToDelete, string descriptionToDelete)
 
         {
             //DELETE A RECORD
-
-            Wait.WaitToBeVisible(driver, "XPath", "//*[@id=\"tmsGrid\"]/div[4]/a[4]/span", 30); 
-
             try
             {
-                Thread.Sleep(5000);
+         
                 //Click on last record button
-                Wait.WaitToBeClickable(driver, "XPath", "//*[@id=\"tmsGrid\"]/div[4]/a[4]/span", 30); ////*[@id="tmsGrid"]/div[4]/a[4]/span
+                Wait.WaitToBeClickable(driver, "XPath", "//*[@id=\"tmsGrid\"]/div[4]/a[4]/span", 30);  
                 IWebElement lastRecordButton = driver.FindElement(By.XPath("//*[@id=\"tmsGrid\"]/div[4]/a[4]/span"));
                 lastRecordButton.Click();
 
@@ -202,15 +194,14 @@ namespace TurnUpPortal_Specflow.Pages
 
            // Validate first if record to be deleted is existing
             Wait.WaitToBeVisible(driver, "XPath", "//*[@id=\"tmsGrid\"]/div[3]/table/tbody/tr[last()]/td[1]", 30); ////*[@id="tmsGrid"]/div[3]/table/tbody/tr[6]/td[1]
-
-            Thread.Sleep(5000);
-
+            
+         
             try
             { 
-                IWebElement recordToDelete = driver.FindElement(By.XPath("//*[@id=\"tmsGrid\"]/div[3]/table/tbody/tr[last()]/td[1]"));
+                IWebElement codeDelete = driver.FindElement(By.XPath("//*[@id=\"tmsGrid\"]/div[3]/table/tbody/tr[last()]/td[1]"));
+                IWebElement descriptionDelete = driver.FindElement(By.XPath("//*[@id=\"tmsGrid\"]/div[3]/table/tbody/tr[last()]/td[3]"));   
 
-
-                if (recordToDelete.Text == "APRIL2025")
+                if (codeDelete.Text == codeToDelete && descriptionDelete.Text  == descriptionToDelete)
                 {
 
                     //Click on Delete button for last record
@@ -237,21 +228,27 @@ namespace TurnUpPortal_Specflow.Pages
             Wait.WaitToBeClickable(driver, "XPath", "//*[@id=\"tmsGrid\"]/div[4]/a[4]/span", 30);
             IWebElement lastRecordButtonPostDelete = driver.FindElement(By.XPath("//*[@id=\"tmsGrid\"]/div[4]/a[4]/span"));
             lastRecordButtonPostDelete.Click();
-            Wait.WaitToBeVisible(driver, "XPath", "//*[@id=\"tmsGrid\"]/div[3]/table/tbody/tr[last()]/td[1]", 30);
-
-            IWebElement code = driver.FindElement(By.XPath("//*[@id=\"tmsGrid\"]/div[3]/table/tbody/tr[last()]/td[1]"));
-            Thread.Sleep(5000);
-
-            if (code.Text != "APRIL2025")
-            {
-                Assert.Pass("Record deleted successfully.");
-            }
-            else
-            {
-                Assert.Fail("Failed to delete record.");
-            }
+           
+            
 
         }
+
+        public string GetCodeFromLastRow (IWebDriver driver)
+        {
+            Wait.WaitToBeVisible(driver, "XPath", "//*[@id=\"tmsGrid\"]/div[3]/table/tbody/tr[last()]/td[1]", 30);
+            IWebElement code = driver.FindElement(By.XPath("//*[@id=\"tmsGrid\"]/div[3]/table/tbody/tr[last()]/td[1]"));
+            return code.Text;
+        }
+
+        public string GetDescriptionFromLastRow(IWebDriver driver)
+        {
+             
+            Wait.WaitToBeVisible(driver, "Id", "Description", 5);
+            IWebElement descriptionText = driver.FindElement(By.Id("Description"));
+            return descriptionText.Text;
+        }
+
+
 
     }
 }

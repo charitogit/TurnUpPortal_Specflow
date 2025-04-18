@@ -1,12 +1,4 @@
-﻿using NUnit.Framework;
-using OpenQA.Selenium.Support.UI;
-using OpenQA.Selenium;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using TurnUpPortal_Specflow.Utilities;
+﻿
 
 namespace TurnUpPortal_Specflow.Pages
 {
@@ -15,6 +7,7 @@ namespace TurnUpPortal_Specflow.Pages
         public void LogInSteps(IWebDriver driver)
         {
             //Identify the UserName textbox and Enter User Name
+            Wait.WaitToBeVisible(driver, "Id", "UserName", 10);
             IWebElement userNameTextBox = driver.FindElement(By.Id("UserName"));
             userNameTextBox.SendKeys("hari");
 
